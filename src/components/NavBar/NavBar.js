@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './NavBar.css';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import counter from '../../store/actions/counter-action';
 import decrement from '../../store/actions/decrement-action';
 
@@ -22,18 +23,18 @@ class NavBar extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="www.google.com"><img src={require('../../assets/firebase-logo.png')} className="logo" alt="firebase logo" /></a>
+            <Link className="navbar-brand" to="/"><img src={require('../../assets/firebase-logo.png')} className="logo" alt="firebase logo" /></Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li><a href="www.google.com">Home</a></li>
-              <li><a href="www.google.com">About</a></li>
+              <li><Link to="/home">Home</Link></li>
+              <li><Link to="/about">About</Link></li>
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Sign In</a></li>
-              <li><a href="#">Sign Up</a></li>
+            <ul className="nav navbar-nav navbar-right">
+              <li><Link to="/signin">Sign In</Link></li>
+              <li><Link to="/signup">Sign Up</Link></li>
             </ul>
           </div>
         </div>
