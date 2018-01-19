@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from 'react-redux';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
-import { Router } from 'react-router';
 import MyRoutes from './components/MyRoutes/MyRoutes';
 
 ReactDOM.render(

@@ -9,6 +9,7 @@ import Home from '../Home/Home';
 import About from '../About.js/About';
 import SignInForm from '../SignInForm/SignInForm';
 import SignUpForm from '../SignUpForm.js/SignUpForm';
+import Footer from '../Footer/Footer';
 
 class MyRoutes extends Component {
     render() {
@@ -17,10 +18,11 @@ class MyRoutes extends Component {
                 <div>
                     <NavBar />
                     <Route exact path="/" component={ App } />
-                    <Route exact path="/home" component={ Home } />
+                    <Route exact path="/home/:id" component={ Home } />
                     <Route exact path="/about" component={ About } />
                     <Route exact path="/signin" component={ SignInForm } />
                     <Route exact path="/signup" component={ SignUpForm } />
+                    <Footer />
                 </div>
             </Router>
         )
