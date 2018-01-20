@@ -78,11 +78,6 @@ class MyRoutes extends Component {
 }
 
 const mapStateToProps = (state) => {
-    // console.log(state.loadUser);
-    // return {
-    //     user: state.loadUser.user,
-    //     isLoggedIn: state.loadUser.isLoggedIn,
-    // }
     return state;
 }
 

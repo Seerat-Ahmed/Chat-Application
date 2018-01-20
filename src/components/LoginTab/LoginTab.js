@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
     let user = state.loadUser.user;
     let uid = null;
     let name = null;
-    console.log(user);
+    console.log(state);
 
     /* ********** if there is a user ********** */
     if(state.loadUser.user){
