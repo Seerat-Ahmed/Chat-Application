@@ -12,7 +12,7 @@ class Footer extends Component {
             <div className="footer">
                 <div className="footer-line">
                     <p>
-                        &copy; {this.state.year} -  My React Application
+                        &copy; {this.state.year} - Seerat Ahmed Khan
                     </p>
                 </div>
 

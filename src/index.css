@@ -5,13 +5,13 @@ body {
 }
 
 .section {
-  margin: 12px;
-  margin-left: 20px;
+  width: 90%;
+  margin: 18px auto;
 }
 
 
 .heading-section {
-  padding-bottom: 8px;
+  padding-bottom: 6px;
   display: inline-block;
   margin-bottom: 15px;
   margin-top: 9px;

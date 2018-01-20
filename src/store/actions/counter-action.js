@@ -3,8 +3,8 @@ import constant from '../constants';
 export default function() {
 
     let action = {
-        type: constant.counter,
-        payload: 2,
+        type: constant.INCREMENT,
+        payload: 1,
     }
 
     return action;

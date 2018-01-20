@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './sign-in.css'; 
+import { firebase } from '@firebase/app';
 
 class SignInForm extends Component {
 
@@ -27,8 +28,16 @@ class SignInForm extends Component {
     }
 
     handleSubmit() {
-        this.setState({ email: '',  password: '' });
-        console.log(this.state);
+        const email = this.state.email;
+        const password = this.state.password;
+        this.signUp(email, password);
+        this.setState({ email: '',  password: '' });        
+    }
+
+    signUp(email, password) {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((user) => { console.log(user) })
+        .catch((error) => console.log(error))
     }
 
     render(){

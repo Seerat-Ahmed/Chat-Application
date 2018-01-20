@@ -1,4 +1,6 @@
 export default {
-    counter : 'counter',
-    decrement: 'decrement',
+    INCREMENT : 'INCREMENT',
+    DECREMENT: 'DECREMENT',
+    CHECK_FOR_LOGIN: 'CHECK_FOR_LOGIN',
+    LOADING: 'LOADING',
 }

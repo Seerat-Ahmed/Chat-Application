@@ -4,13 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import counter from '../../store/actions/counter-action';
 import decrement from '../../store/actions/decrement-action';
+import LoginTab from '../LoginTab/LoginTab';
 
 class NavBar extends Component {
-
-  constructor(props) {
-    super(props);
-    console.log('NavBar has been rendered');
-  }
 
   render() {
     return (
@@ -30,12 +26,11 @@ class NavBar extends Component {
             <ul className="nav navbar-nav">
               <li><Link to="/home">Home</Link></li>
               <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
             </ul>
+      
+            <LoginTab />  
 
-            <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/signin">Sign In</Link></li>
-              <li><Link to="/signup">Sign Up</Link></li>
-            </ul>
           </div>
         </div>
       </nav>

@@ -8,12 +8,11 @@
 }
 
 .aside-logo {
-    width: 40%;
+    width: 50%;
     height: 40%; 
 }
 
-.avatar {
-	border: 5px white solid;
+.avatar {	
 	overflow: hidden;
 	transform: translatey(0px);
 	animation: float 6s ease-in-out infinite;
@@ -23,7 +22,7 @@
 	0% {
 		transform: translatey(0px);
 	}
-	50% {
+	50%{
 		transform: translatey(-20px);
 	}
 	100% {

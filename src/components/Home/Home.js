@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import Counter from '../TestRedux/counter';
 import './home.css';
 
 class Home extends Component {
     render(){
         return(
             <div className="home section">
-                <h2>Home</h2>
+                <h2 className="heading-section">Home</h2>
                 <div className="h-line"></div>
-                <h4>{ this.props.match.params.id }</h4>
+                <Counter />
             </div>
         )
     }
