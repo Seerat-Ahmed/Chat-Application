@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import counter from '../reducers/counter-reducer';
-import loadingReducer from './loading-reducer';
-
+import loader from '../reducers/main-loader-reducer';
 export default combineReducers({
-    counter: counter,
-    loadUser: loadingReducer
+    /* ********** Reducer for dispatching main loader actions ********** */
+    isLoading: loader,
 });

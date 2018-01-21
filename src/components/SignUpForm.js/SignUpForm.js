@@ -7,9 +7,10 @@ class SignUpForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { username: '', email: '', password: '', confirmPassword: '' };
+        this.state = { username: '', email: '', password: '', confirmPassword: '', buttonState: 'disabled' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateCredentials = this.validateCredentials.bind(this);
     }
 
     handleChange(event) {
@@ -31,6 +32,18 @@ class SignUpForm extends Component {
             default:
                 break;
         }
+
+        this.validateCredentials();
+    }
+
+    validateCredentials() {
+        if (this.state.username !== '' && this.state.email !== '' && this.state.password !== '' && this.state.confirmPassword !== '') {
+            if (this.state.password === this.state.confirmPassword)
+                this.setState({ buttonState: '' });
+        }
+        else {
+            this.setState({ buttonState: 'disabled' });
+        }
     }
 
     handleSubmit() {
@@ -40,20 +53,19 @@ class SignUpForm extends Component {
         const name = this.state.username;
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
+                console.log('Successfully Created New User');
                 return user.updateProfile({
                     displayName: name,
                 })
                     .then(() => {
-                        console.log('Successfully Updated');
+                        console.log('Successfully Updated Username');
+                        this.props.history.push('/');   
                     })
-                    .catch((error) => {
-                        console.log(error)
-                    });
+                    .catch((error) => console.log('Failed to update user: ', error) );
             })
-            .catch((error) => { console.log('Failed to Logged In' + error) });
+            .catch((error) => console.log('Failed to Logged In', error));
 
         this.setState({ username: '', email: '', password: '', confirmPassword: '' });
-        console.log(this.state);
     }
 
     render() {
@@ -101,7 +113,7 @@ class SignUpForm extends Component {
                         </div>
 
                         <div className="form-group">
-                            <button onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
+                            <button onClick={this.handleSubmit} className={"btn btn-primary " + this.state.buttonState}>Submit</button>
                         </div>
 
                         <Link to="/signin" className="link">Already have an account?</Link>

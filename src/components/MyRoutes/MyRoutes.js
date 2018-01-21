@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     BrowserRouter as Router,
-    Route
+    Route,
 } from 'react-router-dom';
 import App from '../App/App';
 import NavBar from '../NavBar/NavBar';
@@ -13,17 +13,16 @@ import Footer from '../Footer/Footer';
 import Contact from '../contact/Contact';
 import FireLoader from '../Loader/FireLoader';
 import { connect } from 'react-redux';
-import loading from '../../store/actions/loading-action';
 import { firebase } from '@firebase/app';
+import Chat from '../Chat/Chat';
+import { _startLoader, _stopLoader } from '../../store/actions/main-loader-action';
+import history from '../../history';
 
 class MyRoutes extends Component {
 
     constructor(props) {
         super(props);
-
         this.checkAuthState = this.checkAuthState.bind(this);
-
-        this.state = { loading: true }
     }
 
     componentWillMount() {
@@ -31,23 +30,19 @@ class MyRoutes extends Component {
     }
 
     checkAuthState() {
-
-        /* ********** Checking for authentication state ********** */        
+        const that = this;
+        /* ********** Checking for authentication state ********** */
         firebase.auth().onAuthStateChanged((user) => {
-            let currentUser = null
-            let isLoggedIn = false;
-
             if (user) {
-                currentUser = user;
-                isLoggedIn = true;
+                console.log('******************** You are logged in ******************** ');
+                that.props.stopLoading();
+                history.push('/');
             }
-
-        /* ********** removing loader ********** */            
-            this.setState({ loading: false })
-
-        /* ********** Dispatching Loading action ********** */
-            this.props.loading(currentUser, isLoggedIn);
-
+            else {
+                console.log('******************** You are logged out ******************** ');
+                that.props.stopLoading();
+                history.push('/');
+            }
         });
     }
 
@@ -56,19 +51,20 @@ class MyRoutes extends Component {
             <Router>
                 {
                     /* ********** if logged in ********** */
-                    (this.state.loading) ?
+                    (this.props.isLoading) ?
                         <div>
                             <FireLoader />
                         </div>
-                    /* ********** if not logged in ********** */                        
-                        : <div>
+                        :
+                        <div>
                             <NavBar />
-                            <Route exact path="/" component={App} />
                             <Route exact path="/home" component={Home} />
+                            <Route exact path="/" component={App} />
                             <Route exact path="/about" component={About} />
                             <Route exact path="/signin" component={SignInForm} />
                             <Route exact path="/signup" component={SignUpForm} />
                             <Route exact path="/contact" component={Contact} />
+                            <Route exact path="/chat:id" component={Chat} />
                             <Footer />
                         </div>
                 }
@@ -78,13 +74,16 @@ class MyRoutes extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        isLoading: state.isLoading,
+    };
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loading: (user, loginState) => dispatch(loading(user, loginState))
+        startLoading: () => dispatch(_startLoader()),
+        stopLoading: () => dispatch(_stopLoader()),
     }
 }
 

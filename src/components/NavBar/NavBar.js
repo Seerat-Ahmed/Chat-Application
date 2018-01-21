@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './NavBar.css';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import counter from '../../store/actions/counter-action';
-import decrement from '../../store/actions/decrement-action';
+import { Link } from 'react-router-dom';  
 import LoginTab from '../LoginTab/LoginTab';
 
 class NavBar extends Component {
@@ -45,9 +43,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {
-  counter: counter,
-  decrement: decrement,
-})(NavBar);
+export default connect(mapStateToProps, null)(NavBar);
 
 

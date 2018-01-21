@@ -48,8 +48,8 @@ class LoginTab extends Component {
             /* ********** if not logged in ********** */
             :(
                 <ul className="nav navbar-nav navbar-right">
+                <li><Link to="/signup">Register</Link></li>
                     <li><Link to="/signin">Sign In</Link></li>
-                    <li><Link to="/signup">Sign Up</Link></li>
             </ul>
             )
         );
@@ -57,22 +57,8 @@ class LoginTab extends Component {
 }
 
 const mapStateToProps = (state) => {
-    let user = state.loadUser.user;
-    let uid = null;
-    let name = null;
-    console.log(state);
-
-    /* ********** if there is a user ********** */
-    if(state.loadUser.user){
-        name = user.displayName;
-        uid = user.uid;
-    }
-    console.log(state.loadUser);
-    return {
-        name: name,
-        uid: uid,
-        isLoggedIn: state.loadUser.isLoggedIn,
-    }
+    
+    return state;
 }
 
 export default connect(mapStateToProps, null)(LoginTab);

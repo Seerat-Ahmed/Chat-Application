@@ -1,17 +1,43 @@
 import React, { Component } from 'react';
-import Counter from '../TestRedux/counter';
 import './home.css';
+import { connect } from 'react-redux';
 
 class Home extends Component {
+
+    constructor(props) {
+        super(props);
+        console.log();
+    }
+
     render(){
         return(
             <div className="home section">
-                <h2 className="heading-section">Home</h2>
+                <h3 className="heading-section">Home</h3>
                 <div className="h-line"></div>
-                <Counter />
+                <ul className="list-group">
+                {
+                   
+                }
+                </ul>
+                
             </div>
         )
     }
 }
 
-export default Home;
+
+const mapStateToProps = (state) => {
+    
+    return {
+        
+    };
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
