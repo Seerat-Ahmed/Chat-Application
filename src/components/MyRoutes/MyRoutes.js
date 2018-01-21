@@ -16,7 +16,9 @@ import { connect } from 'react-redux';
 import { firebase } from '@firebase/app';
 import Chat from '../Chat/Chat';
 import { _startLoader, _stopLoader } from '../../store/actions/main-loader-action';
+import { _setUserInfo, _removeUser } from '../../store/actions/set-user-info-action';
 import history from '../../history';
+import PorfileCard from '../Profile/ProfileCard';
 
 class MyRoutes extends Component {
 
@@ -36,11 +38,13 @@ class MyRoutes extends Component {
             if (user) {
                 console.log('******************** You are logged in ******************** ');
                 that.props.stopLoading();
+                that.props.setUserInfo(user);
                 history.push('/');
             }
             else {
                 console.log('******************** You are logged out ******************** ');
                 that.props.stopLoading();
+                that.props.clearUserInfo();
                 history.push('/');
             }
         });
@@ -65,6 +69,7 @@ class MyRoutes extends Component {
                             <Route exact path="/signup" component={SignUpForm} />
                             <Route exact path="/contact" component={Contact} />
                             <Route exact path="/chat:id" component={Chat} />
+                            <Route exact path="/profile" component={PorfileCard}/>
                             <Footer />
                         </div>
                 }
@@ -84,6 +89,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         startLoading: () => dispatch(_startLoader()),
         stopLoading: () => dispatch(_stopLoader()),
+        setUserInfo: (user) => dispatch(_setUserInfo(user)),
+        clearUserInfo: () => dispatch(_removeUser()),
+
     }
 }
 

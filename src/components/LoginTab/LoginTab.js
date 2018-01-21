@@ -57,8 +57,10 @@ class LoginTab extends Component {
 }
 
 const mapStateToProps = (state) => {
-    
-    return state;
+    const name = (state.user)? state.user.displayName : '';
+    return {
+        name: name,
+    };
 }
 
 export default connect(mapStateToProps, null)(LoginTab);

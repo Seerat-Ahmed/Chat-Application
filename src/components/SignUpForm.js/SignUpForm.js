@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { firebase } from '@firebase/app';
 import './sign-up.css';
+import connect from 'react-redux/lib/connect/connect';
+import { _setUserInfo } from '../../store/actions/set-user-info-action';
 
 class SignUpForm extends Component {
 
@@ -51,15 +53,17 @@ class SignUpForm extends Component {
         const email = this.state.email;
         const password = this.state.password;
         const name = this.state.username;
+        const that = this;
+        let loginUser = {};
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
-                console.log('Successfully Created New User');
+                loginUser = user;
                 return user.updateProfile({
                     displayName: name,
                 })
                     .then(() => {
-                        console.log('Successfully Updated Username');
-                        this.props.history.push('/');   
+                        that.props.setUserInfo(loginUser);
+                        that.props.history.push('/');   
                     })
                     .catch((error) => console.log('Failed to update user: ', error) );
             })
@@ -131,4 +135,16 @@ class SignUpForm extends Component {
     }
 }
 
-export default SignUpForm;
+
+const mapStateToProps = (state) => {
+    return state;
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUserInfo: (user) => dispatch(_setUserInfo(user)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

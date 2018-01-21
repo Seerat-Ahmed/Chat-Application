@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './sign-in.css'; 
 import { firebase } from '@firebase/app';
 import { connect } from 'react-redux';
+import { _setUserInfo } from '../../store/actions/set-user-info-action';
 
 class SignInForm extends Component {
 
@@ -39,6 +40,7 @@ class SignInForm extends Component {
         const that = this;
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
+            this.props.setUserInfo(user);
             that.props.history.push('/home');
          })
         .catch((error) => console.log(error))
@@ -102,7 +104,7 @@ class SignInForm extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+        setUserInfo: (user) => dispatch(_setUserInfo(user)),
     }
 }
 
