@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { firebase } from '@firebase/app';
 import { connect } from 'react-redux';
+import { _setToLogout } from '../../store/actions/auth-state-action';
 
 
 class LoginTab extends Component {
@@ -31,7 +32,8 @@ class LoginTab extends Component {
     }
 
     loggout() {
-        firebase.auth().signOut();
+        firebase.auth().signOut()
+        .then(() => this.props.setToLogout());
     }
 
     render() {
@@ -63,4 +65,11 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, null)(LoginTab);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setToLogout: () => dispatch(_setToLogout()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginTab);

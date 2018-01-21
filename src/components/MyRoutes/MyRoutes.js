@@ -19,6 +19,8 @@ import { _startLoader, _stopLoader } from '../../store/actions/main-loader-actio
 import { _setUserInfo, _removeUser } from '../../store/actions/set-user-info-action';
 import history from '../../history';
 import PorfileCard from '../Profile/ProfileCard';
+import { _setToLogin, _setToLogout } from '../../store/actions/auth-state-action';
+import NotFound404 from '../NotFound404/NotFound404';
 
 class MyRoutes extends Component {
 
@@ -36,15 +38,15 @@ class MyRoutes extends Component {
         /* ********** Checking for authentication state ********** */
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                console.log('******************** You are logged in ******************** ');
                 that.props.stopLoading();
                 that.props.setUserInfo(user);
+                that.props.setToLogin();
                 history.push('/');
             }
             else {
-                console.log('******************** You are logged out ******************** ');
                 that.props.stopLoading();
                 that.props.clearUserInfo();
+                that.props.setToLogout();
                 history.push('/');
             }
         });
@@ -63,14 +65,24 @@ class MyRoutes extends Component {
                         <div>
                             <NavBar />
                             <Route exact path="/home" component={Home} />
-                            <Route exact path="/" component={App} />
                             <Route exact path="/about" component={About} />
-                            <Route exact path="/signin" component={SignInForm} />
-                            <Route exact path="/signup" component={SignUpForm} />
                             <Route exact path="/contact" component={Contact} />
-                            <Route exact path="/chat:id" component={Chat} />
-                            <Route exact path="/profile" component={PorfileCard}/>
-                            <Footer />
+                            {
+                                /* If user is logged in */
+                                (this.props.isLoggedIn) ?
+                                    <div>
+                                        <Route exact path="/" component={App} />
+                                        <Route exact path="/profile" component={PorfileCard} />
+                                        <Route exact path="/chat" component={Chat} />
+                                    </div>
+                                    /* If user is logged out */
+                                    :
+                                    <div>
+                                        <Route exact path="/signin" component={SignInForm} />
+                                        <Route exact path="/signup" component={SignUpForm} />
+                                    </div>
+                            }
+                            <Footer />                   
                         </div>
                 }
             </Router>
@@ -79,8 +91,10 @@ class MyRoutes extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         isLoading: state.isLoading,
+        isLoggedIn: state.isLoggedIn,
     };
 }
 
@@ -91,7 +105,8 @@ const mapDispatchToProps = (dispatch) => {
         stopLoading: () => dispatch(_stopLoader()),
         setUserInfo: (user) => dispatch(_setUserInfo(user)),
         clearUserInfo: () => dispatch(_removeUser()),
-
+        setToLogin: () => dispatch(_setToLogin()),
+        setToLogout: () => dispatch(_setToLogout()),
     }
 }
 

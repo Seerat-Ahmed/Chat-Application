@@ -4,6 +4,7 @@ import { firebase } from '@firebase/app';
 import './sign-up.css';
 import connect from 'react-redux/lib/connect/connect';
 import { _setUserInfo } from '../../store/actions/set-user-info-action';
+import { _setToLogin } from '../../store/actions/auth-state-action';
 
 class SignUpForm extends Component {
 
@@ -63,6 +64,7 @@ class SignUpForm extends Component {
                 })
                     .then(() => {
                         that.props.setUserInfo(loginUser);
+                        that.props.setLoginState();
                         that.props.history.push('/');   
                     })
                     .catch((error) => console.log('Failed to update user: ', error) );
@@ -144,6 +146,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setUserInfo: (user) => dispatch(_setUserInfo(user)),
+        setLoginState: () => dispatch(_setToLogin()),
     }
 }
 
