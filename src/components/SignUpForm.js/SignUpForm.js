@@ -49,6 +49,17 @@ class SignUpForm extends Component {
         }
     }
 
+    saveUserToDatabase(user) {
+        firebase.database().ref('/users/' + user.uid).set({
+            name: user.displayName,
+            uid: user.uid,
+            email: user.email,
+        })
+        .then((user) => {
+            console.log('Successfully saved to database: ', user);
+        });
+    }
+
     handleSubmit() {
 
         const email = this.state.email;
@@ -56,6 +67,7 @@ class SignUpForm extends Component {
         const name = this.state.username;
         const that = this;
         let loginUser = {};
+        
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
                 loginUser = user;
@@ -63,6 +75,7 @@ class SignUpForm extends Component {
                     displayName: name,
                 })
                     .then(() => {
+                        that.saveUserToDatabase(this.props.user);
                         that.props.setUserInfo(loginUser);
                         that.props.setLoginState();
                         that.props.history.push('/');   
@@ -139,7 +152,9 @@ class SignUpForm extends Component {
 
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        user: state.user,
+    };
 }
 
 

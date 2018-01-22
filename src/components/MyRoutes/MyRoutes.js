@@ -21,16 +21,19 @@ import history from '../../history';
 import PorfileCard from '../Profile/ProfileCard';
 import { _setToLogin, _setToLogout } from '../../store/actions/auth-state-action';
 import NotFound404 from '../NotFound404/NotFound404';
+import { _getAllUsers } from '../../store/actions/all-user-action';
 
 class MyRoutes extends Component {
 
     constructor(props) {
         super(props);
         this.checkAuthState = this.checkAuthState.bind(this);
+        this.getAllUser = this.getAllUser.bind(this);
     }
 
     componentWillMount() {
         this.checkAuthState();
+        this.getAllUser();
     }
 
     checkAuthState() {
@@ -38,17 +41,24 @@ class MyRoutes extends Component {
         /* ********** Checking for authentication state ********** */
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                that.props.stopLoading();
-                that.props.setUserInfo(user);
-                that.props.setToLogin();
+                that.props.stopLoading();//dispatching action
+                that.props.setUserInfo(user);//dispatching action
+                that.props.setToLogin();//dispatching action
                 history.push('/');
             }
             else {
-                that.props.stopLoading();
-                that.props.clearUserInfo();
-                that.props.setToLogout();
+                that.props.stopLoading();//dispatching action
+                that.props.clearUserInfo();//dispatching action
+                that.props.setToLogout();//dispatching action
                 history.push('/');
             }
+        });
+    }
+
+
+    getAllUser() {
+        firebase.database().ref('/users').on('child_added', (snapshot) => {
+            this.props.getAllUser(snapshot.val(), snapshot.key);//dispatching action
         });
     }
 
@@ -82,7 +92,7 @@ class MyRoutes extends Component {
                                         <Route exact path="/signup" component={SignUpForm} />
                                     </div>
                             }
-                            <Footer />                   
+                            <Footer />
                         </div>
                 }
             </Router>
@@ -91,7 +101,6 @@ class MyRoutes extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         isLoading: state.isLoading,
         isLoggedIn: state.isLoggedIn,
@@ -107,6 +116,7 @@ const mapDispatchToProps = (dispatch) => {
         clearUserInfo: () => dispatch(_removeUser()),
         setToLogin: () => dispatch(_setToLogin()),
         setToLogout: () => dispatch(_setToLogout()),
+        getAllUser: (user, uid) => dispatch(_getAllUsers(user, uid)),
     }
 }
 
