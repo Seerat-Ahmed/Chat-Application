@@ -55,9 +55,9 @@ class SignUpForm extends Component {
             uid: user.uid,
             email: user.email,
         })
-        .then((user) => {
-            console.log('Successfully saved to database: ', user);
-        });
+            .then((user) => {
+                console.log('Successfully saved to database: ', user);
+            });
     }
 
     handleSubmit() {
@@ -67,7 +67,7 @@ class SignUpForm extends Component {
         const name = this.state.username;
         const that = this;
         let loginUser = {};
-        
+
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
                 loginUser = user;
@@ -78,9 +78,9 @@ class SignUpForm extends Component {
                         that.saveUserToDatabase(this.props.user);
                         that.props.setUserInfo(loginUser);
                         that.props.setLoginState();
-                        that.props.history.push('/');   
+                        that.props.history.push('/');
                     })
-                    .catch((error) => console.log('Failed to update user: ', error) );
+                    .catch((error) => console.log('Failed to update user: ', error));
             })
             .catch((error) => console.log('Failed to Logged In', error));
 
@@ -154,6 +154,7 @@ class SignUpForm extends Component {
 const mapStateToProps = (state) => {
     return {
         user: state.user,
+        isLoggedIn: state.isLoggedIn,
     };
 }
 
