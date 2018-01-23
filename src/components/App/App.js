@@ -14,7 +14,7 @@ class App extends Component {
           {
             this.props.allUser.map((item, index) => {
               return <li key={index} id={item.uid} className="list-group-item row col-md-7">
-                <span className="col-md-9">{item.user.name}</span>
+                <h4 className="col-md-9">{item.user.name}</h4>
                 <button className="btn btn-primary col-md-3">
                   Say Hello
                 </button>
