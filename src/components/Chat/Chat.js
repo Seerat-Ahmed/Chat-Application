@@ -18,6 +18,7 @@ class Chat extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.scrollToBottom = this.scrollToBottom.bind(this);
+        this.handleEnter = this.handleEnter.bind(this);
     }
 
 
@@ -31,7 +32,13 @@ class Chat extends Component {
         }
     }
 
+    handleEnter(event) {
+        if(event.key === 'Enter')
+            this.onSubmit();
+    }
+
     onSubmit() {
+        const that = this;
         if (this.state.message !== '') {
             firebase.database().ref('/users/' + this.props.user.uid + '/chats/' + this.state.senderUid).push({
                 me: this.state.message,
@@ -42,12 +49,17 @@ class Chat extends Component {
                     })
                         .then((success) => {
                             console.log('Successsfully send message');
+                            that.setState({ message: '' })
                         })
                         .catch((error) => {
                             console.log('Failed to send message', error);
                         });
                 });
         }
+    }
+
+    componentDidMount() {
+        this.textBox.focus();
     }
 
 
@@ -121,7 +133,7 @@ class Chat extends Component {
                         </ul>
 
                         <div className="send-message-wrapper" >
-                            <input type="text" name="message" value={this.state.message} onChange={this.handleChange} className="form-control message-box" />
+                            <input type="text" name="message" value={this.state.message} onKeyPress={ this.handleEnter } onChange={this.handleChange} ref = { el => this.textBox = el } className="form-control message-box" />
                             <button onClick={this.onSubmit} className="btn btn-primary">Send</button>
                         </div>
                     </div>
