@@ -1,0 +1,18 @@
+.scroll-to-me {
+
+}
+
+.chat a:hover {
+    text-decoration: none;
+}
+.sender {
+    background-color: #337ab7;
+}
+
+.sender .name {
+    color: #ffffff;
+}
+
+.sender .message {
+    color: #ffffff;
+}

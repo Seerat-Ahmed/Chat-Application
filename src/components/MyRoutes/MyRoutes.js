@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { firebase } from '@firebase/app';
+import { Switch } from 'react-router';
 import App from '../App/App';
 import NavBar from '../NavBar/NavBar';
 import Home from '../Home/Home';
@@ -9,16 +12,15 @@ import SignUpForm from '../SignUpForm.js/SignUpForm';
 import Footer from '../Footer/Footer';
 import Contact from '../contact/Contact';
 import FireLoader from '../Loader/FireLoader';
-import { connect } from 'react-redux';
-import { firebase } from '@firebase/app';
 import Chat from '../Chat/Chat';
-import { _startLoader, _stopLoader } from '../../store/actions/main-loader-action';
-import { _setUserInfo, _removeUser } from '../../store/actions/set-user-info-action';
 import history from '../../history';
 import PorfileCard from '../Profile/ProfileCard';
+import { _startLoader, _stopLoader } from '../../store/actions/main-loader-action';
+import { _setUserInfo, _removeUser } from '../../store/actions/set-user-info-action';
+import { _getAllUsers } from '../../store/actions/all-user-action';
 import { _setToLogin, _setToLogout } from '../../store/actions/auth-state-action';
 import NotFound404 from '../NotFound404/NotFound404';
-import { _getAllUsers } from '../../store/actions/all-user-action';
+
 class MyRoutes extends Component {
 
     constructor(props) {
@@ -80,7 +82,7 @@ class MyRoutes extends Component {
                                     }
                                     {
                                         (this.props.isLoggedIn) ?
-                                            <Route exact path="/chat" component={Chat} /> : null
+                                            <Route exact path="/chat/:name/:id" component={Chat} /> : null
                                     }
                                     <Route exact path="/signin" component={SignInForm} />
                                     <Route exact path="/signup" component={SignUpForm} />

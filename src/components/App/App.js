@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 
 class App extends Component {
 
+  redirectToChatPage(name, uid) {
+    this.props.history.push('chat/' + name + '/' + uid);
+  }
 
   render() {
     return (
@@ -15,7 +18,7 @@ class App extends Component {
             this.props.allUser.map((item, index) => {
               return <li key={index} id={item.uid} className="list-group-item row col-md-7">
                 <h4 className="col-md-9">{item.user.name}</h4>
-                <button className="btn btn-primary col-md-3">
+                <button onClick={ this.redirectToChatPage.bind(this, item.user.name, item.uid) } className="btn btn-primary col-md-3">
                   Say Hello
                 </button>
               </li>
