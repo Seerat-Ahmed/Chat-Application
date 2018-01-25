@@ -1,6 +1,6 @@
 import constant from '../constants';
 
-export function _getChatMessages(message, key) {
+export function _getChatMessages(message, key, uid) {
     const action = {
         type: constant.GET_CHAT_MESSAGES,
         payload: {

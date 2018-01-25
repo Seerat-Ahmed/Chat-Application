@@ -30,6 +30,10 @@ class SignInForm extends Component {
         }
     }
 
+    signInWithGoogle() {
+
+    }
+
     handleSubmit() {
         const email = this.state.email;
         const password = this.state.password;
@@ -63,7 +67,9 @@ class SignInForm extends Component {
                     <div className="col-md-1"></div>
 
                     <div className="col-md-6">
-
+                        {
+                            // <GoogleProvider />
+                        }
                         <div className="form-group">
                             <label htmlFor="email" className="my-label-wrapper">
                                 <h4 className="my-label">Email: </h4>

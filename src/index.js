@@ -7,12 +7,12 @@ import store from './store';
 import config from './config/firebase-config';
 import registerServiceWorker from './registerServiceWorker';
 import MyRoutes from './components/MyRoutes/MyRoutes';
-import * as firebase  from 'firebase';
+import * as firebase from 'firebase';
 
 firebase.initializeApp(config);
 
 ReactDOM.render(
-    <Provider store = { store } >
+    <Provider store={store} >
         <MyRoutes />
     </Provider>
     , document.getElementById('root'));

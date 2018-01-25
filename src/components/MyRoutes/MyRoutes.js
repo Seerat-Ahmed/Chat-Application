@@ -12,7 +12,6 @@ import SignUpForm from '../SignUpForm.js/SignUpForm';
 import Footer from '../Footer/Footer';
 import Contact from '../contact/Contact';
 import FireLoader from '../Loader/FireLoader';
-import Chat from '../Chat/Chat';
 import history from '../../history';
 import PorfileCard from '../Profile/ProfileCard';
 import { _startLoader, _stopLoader } from '../../store/actions/main-loader-action';
@@ -20,6 +19,7 @@ import { _setUserInfo, _removeUser } from '../../store/actions/set-user-info-act
 import { _getAllUsers } from '../../store/actions/all-user-action';
 import { _setToLogin, _setToLogout } from '../../store/actions/auth-state-action';
 import NotFound404 from '../NotFound404/NotFound404';
+import Chat from '../Chat/Chat';
 
 class MyRoutes extends Component {
 

@@ -33,7 +33,7 @@ class Chat extends Component {
     }
 
     handleEnter(event) {
-        if(event.key === 'Enter')
+        if (event.key === 'Enter')
             this.onSubmit();
     }
 
@@ -42,10 +42,12 @@ class Chat extends Component {
         if (this.state.message !== '') {
             firebase.database().ref('/users/' + this.props.user.uid + '/chats/' + this.state.senderUid).push({
                 me: this.state.message,
+
             })
                 .then(() => {
                     firebase.database().ref('/users/' + this.state.senderUid + '/chats/' + this.props.user.uid).push({
                         sender: this.state.message,
+
                     })
                         .then((success) => {
                             console.log('Successsfully send message');
@@ -85,7 +87,7 @@ class Chat extends Component {
         })
             .then(() => {
                 firebase.database().ref('/users/' + this.props.user.uid + '/chats/' + this.state.senderUid).on('child_added', (snapshot) => {
-                    this.props.getMessage(snapshot.val(), snapshot.key);
+                    this.props.getMessage(snapshot.val(), snapshot.key, this.state.senderUid);
                 });
             });
     }
@@ -98,7 +100,7 @@ class Chat extends Component {
         this.scrollToBottom();
     }
 
-    scrollToBottom() {        
+    scrollToBottom() {
         console.log('node', this.node.scrollHeight);
         console.log('messageList', this.messageList.scrollHeight);
         this.node.scrollIntoView({ behavior: "smooth" });
@@ -108,35 +110,39 @@ class Chat extends Component {
         return (
             <div className="chat">
                 <div className="section">
-                    <h3 className="heading-section">Chat</h3>
+                    <h3 className="heading-section">{this.state.name}</h3>
+                    <div className="row">
+                        <div className="chat-section col-md-9">
+                            <ul className="messages list-group" ref={node => this.messageList = node}>
+                                {
+                                    this.props.conversation.map((item, index) => {
 
-                    <div className="chat-section">
-                        <ul className="messages list-group" ref={node => this.messageList = node}>
-                            {
-                                this.props.conversation.map((item, index) => {
+                                        return (
+                                            <li key={item.key} className={(item.message.me) ? 'list-group-item ' : 'list-group-item  sender'}>
+                                                <div>
+                                                    <Link to="/home" className="link name"><h4>{(item.message.me) ? 'Me' : this.state.name}</h4></Link>
+                                                    <p className="message">{
+                                                        (item.message.me) ?
+                                                            item.message.me
+                                                            : item.message.sender
+                                                    }</p>
+                                                </div>
+                                            </li>
+                                        );
+                                    })
+                                }
+                                <li className="scroll-to-me" ref={node => this.node = node}></li>
+                            </ul>
 
-                                    return (
-                                        <li key={item.key} className={(item.message.me) ? 'list-group-item ' : 'list-group-item  sender'}>
-                                            <div>
-                                                <Link to="/home" className="link name"><h4>{(item.message.me) ? 'Me' : this.state.name}</h4></Link>
-                                                <p className="message">{
-                                                    (item.message.me) ?
-                                                        item.message.me
-                                                        : item.message.sender
-                                                }</p>
-                                            </div>
-                                        </li>
-                                    );
-                                })
-                            }
-                            <li className="scroll-to-me"  ref={node => this.node = node}></li>
-                        </ul>
-
-                        <div className="send-message-wrapper" >
-                            <input type="text" name="message" value={this.state.message} onKeyPress={ this.handleEnter } onChange={this.handleChange} ref = { el => this.textBox = el } className="form-control message-box" />
-                            <button onClick={this.onSubmit} className="btn btn-primary">Send</button>
+                            <div className="send-message-wrapper" >
+                                <input type="text" name="message" value={this.state.message} onKeyPress={this.handleEnter} onChange={this.handleChange} ref={el => this.textBox = el} className="form-control message-box" />
+                                <button onClick={this.onSubmit} className="btn btn-primary">Send</button>
+                            </div>
+                        </div>
+                        <div className="col-md-3">
                         </div>
                     </div>
+
 
 
 
@@ -156,7 +162,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getMessage: (msg, key) => dispatch(_getChatMessages(msg, key)),
+        getMessage: (msg, key, senderUid) => dispatch(_getChatMessages(msg, key, senderUid)),
         clearMessage: () => dispatch(_clearChatMessages()),
     };
 }
