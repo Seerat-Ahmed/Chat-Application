@@ -1,5 +1,5 @@
 .chat-section {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  */
 }
 
 
@@ -8,9 +8,15 @@
 
 }
 
-.sender {
-    background-color: #f8f8f8;
+.home .sender {
+    background-color: #007bff;
+    color: #ffffff;
 }
+
+.home .sender h5 {
+    color: #ffffff;
+}
+
 
 .messages {
     min-height: 300px;
@@ -19,7 +25,7 @@
     border-radius: 5px; 
 }
 .chat-section .h-line {
-    box-shadow: 0 3px 1px 0 rgba(243, 236, 236, 0.253), 0 6px 20px 0 rgba(199, 192, 192, 0.19);
+    /* box-shadow: 0 3px 1px 0 rgba(243, 236, 236, 0.253), 0 6px 20px 0 rgba(199, 192, 192, 0.19); */
     width: 100%;
 }
 
@@ -29,10 +35,25 @@
     width: 80%;
 }
 .send-message-wrapper {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);     
     border-radius: 5px;
+    margin-top: 5px;
+    padding: 0;
 }
 
+.conversation {
+    min-height: 400px;
+    max-height: 400px;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+.send-button {
+    margin-top: 2px;
+}
+
+.chat-section {
+    
+}
 
 .link {
     /* color: #ffffff; */

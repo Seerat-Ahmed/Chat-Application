@@ -15,7 +15,7 @@
 .avatar {	
 	overflow: hidden;
 	transform: translatey(0px);
-	animation: float 6s ease-in-out infinite;
+	animation: float 5s ease-in-out infinite;
 }
 
 @keyframes float {

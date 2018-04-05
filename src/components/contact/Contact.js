@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './contact.css';
+
 
 class Contact extends Component {
     constructor(props) {
@@ -8,10 +10,13 @@ class Contact extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillUpdate() {
+
+    }
 
     handleChange(event) {
         const element = event.target;
-        switch(element.name) {
+        switch (element.name) {
             case 'subject':
                 this.setState({ subject: element.value });
                 break;
@@ -30,7 +35,7 @@ class Contact extends Component {
 
     render() {
         return (
-            <div className="section">
+            <div className="section contact">
                 <h3 className="heading-section">Contact - My React Application</h3>
                 <div className="h-line"></div>
                 <div className="row">
@@ -43,21 +48,21 @@ class Contact extends Component {
                             <label htmlFor="to" className="my-label-wrapper">
                                 <h4 className="my-label">To: </h4>
                             </label>
-                            <input type="text" name="username" value={this.state.to} disabled id="to" className="form-control" />
+                            <input type="text" name="username" value={this.state.to} disabled id="to" className="form-control disabled" />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="subject" className="my-label-wrapper">
                                 <h4 className="my-label">Subject: </h4>
                             </label>
-                            <input type="text" name="subject" value={this.state.subject } onChange={this.handleChange} id="subject" placeholder="Subject" className="form-control" />
+                            <input type="text" name="subject" value={this.state.subject} onChange={this.handleChange} id="subject" placeholder="Subject" className="form-control" />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="message" className="my-label-wrapper">
                                 <h4 className="my-label">Message: </h4>
                             </label>
-                            <textarea type="text" name="message" style={{ height: "170px" }}value={this.state.body } onChange={this.handleChange} id="message" row="5" placeholder="Write your message here" className="form-control"></textarea>
+                            <textarea type="text" name="message" style={{ height: "170px" }} value={this.state.body} onChange={this.handleChange} id="message" row="5" placeholder="Write your message here" className="form-control"></textarea>
                         </div>
 
 
@@ -67,14 +72,9 @@ class Contact extends Component {
 
                     </div>
 
-                    <div className="col-md-5 aside-logo-wrapper">
-                        <div className="avatar">
-                            <img src={require('../../assets/firebase-logo.png')} alt="firebase-logo" className="aside-logo" />
-                        </div>
-                    </div>
                 </div>
             </div>
-                );
+        );
     }
 }
 

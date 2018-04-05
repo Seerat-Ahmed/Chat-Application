@@ -1,9 +1,8 @@
 export default {
-    apiKey: "AIzaSyCBaJuWiApUy0rIrNPqoQXTD9v2DYhHQmg",
-    authDomain: "ubit-49604.firebaseapp.com",
-    databaseURL: "https://ubit-49604.firebaseio.com",
-    projectId: "ubit-49604",
-    storageBucket: "ubit-49604.appspot.com",
-    messagingSenderId: "220047812652"
-
+        apiKey: "AIzaSyBHQd8IsmnxIIe-Hj7jSMHMpAXuuTKlxS4",
+        authDomain: "chat-application-741fc.firebaseapp.com",
+        databaseURL: "https://chat-application-741fc.firebaseio.com",
+        projectId: "chat-application-741fc",
+        storageBucket: "",
+        messagingSenderId: "902252521165"
 }

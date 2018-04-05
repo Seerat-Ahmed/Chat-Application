@@ -5,6 +5,7 @@ class About extends Component {
     render() {
         return (
             <div className="about section">
+
                 <h3 className="heading-section">About - My React Application</h3>
                 <div className="h-line"></div>
 
@@ -25,6 +26,7 @@ class About extends Component {
                             <img src={require('../../assets/firebase-logo.png')} alt="firebase-logo" className="aside-logo" />
                         </div>
                     </div>
+
                 </div>
             </div>
         )

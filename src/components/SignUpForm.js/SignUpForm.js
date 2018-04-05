@@ -10,10 +10,20 @@ class SignUpForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { username: '', email: '', password: '', confirmPassword: '', buttonState: 'disabled' };
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            buttonState: 'disabled',
+            isNameMissing: false,
+            isPasswordNotMatch: false,
+            isShortPassword: false,
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateCredentials = this.validateCredentials.bind(this);
+
     }
 
     handleChange(event) {
@@ -36,17 +46,40 @@ class SignUpForm extends Component {
                 break;
         }
 
-        this.validateCredentials();
     }
 
     validateCredentials() {
-        if (this.state.username !== '' && this.state.email !== '' && this.state.password !== '' && this.state.confirmPassword !== '') {
-            if (this.state.password === this.state.confirmPassword)
-                this.setState({ buttonState: '' });
+        if (this.state.username !== '') {
+            this.setState({
+                isNameMissing: false
+            })
         }
         else {
-            this.setState({ buttonState: 'disabled' });
+            this.setState({
+                isNameMissing: true
+            })
         }
+
+        if (this.state.password === this.state.confirmPassword) {
+            this.setState({
+                isPasswordNotMatch: true,
+            })
+        }
+        else {
+            this.setState({
+                isPasswordNotMatch: false,
+            })
+        }
+
+        if (this.state.password.length > 6)
+            this.setState({
+                isShortPassword: false,
+            })
+        else
+            this.setState({
+                isShortPassword: true
+            })
+
     }
 
     saveUserToDatabase(user) {
@@ -67,24 +100,25 @@ class SignUpForm extends Component {
         const name = this.state.username;
         const that = this;
         let loginUser = {};
-
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(user => {
-                loginUser = user;
-                return user.updateProfile({
-                    displayName: name,
-                })
-                    .then(() => {
-                        that.saveUserToDatabase(this.props.user);
-                        that.props.setUserInfo(loginUser);
-                        that.props.setLoginState();
-                        that.props.history.push('/');
+        if (this.validateCredentials()) {
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(user => {
+                    loginUser = user;
+                    return user.updateProfile({
+                        displayName: name,
                     })
-                    .catch((error) => console.log('Failed to update user: ', error));
-            })
-            .catch((error) => console.log('Failed to Logged In', error));
+                        .then(() => {
+                            that.saveUserToDatabase(this.props.user);
+                            that.props.setUserInfo(loginUser);
+                            that.props.setLoginState();
+                            that.props.history.push('/');
+                        })
+                        .catch((error) => console.log('Failed to update user: ', error));
+                })
+                .catch((error) => console.log('Failed to Logged In', error));
 
-        this.setState({ username: '', email: '', password: '', confirmPassword: '' });
+            this.setState({ username: '', email: '', password: '', confirmPassword: '' });
+        }
     }
 
     render() {
@@ -107,32 +141,50 @@ class SignUpForm extends Component {
                             <label htmlFor="username" className="my-label-wrapper">
                                 <h4 className="my-label">Username: </h4>
                             </label>
-                            <input type="text" name="username" value={this.state.username} onChange={this.handleChange} id="username" placeholder="Username" className="form-control" />
+                            <input type="text" name="username" value={this.state.username} onChange={this.handleChange} id="username" placeholder="Username" className="form-control" required />
+                            {
+                                (this.state.isNameMissing) ?
+                                    <div className="alert alert-danger">Kindly fill the name</div>
+                                    :
+                                    null
+                            }
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="email" className="my-label-wrapper">
                                 <h4 className="my-label">Email: </h4>
                             </label>
-                            <input type="email" name="email" value={this.state.email} onChange={this.handleChange} id="email" placeholder="Email" className="form-control" />
+                            <input type="email" name="email" value={this.state.email} onChange={this.handleChange} id="email" placeholder="Email" className="form-control" required />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="password" className="my-label-wrapper">
                                 <h4 className="my-label">Password: </h4>
                             </label>
-                            <input type="password" name="password" value={this.state.password} onChange={this.handleChange} id="password" placeholder="Password" className="form-control" />
+                            <input type="password" name="password" onChange={this.handleChange} value={this.state.password} id="password" placeholder="Password" className="form-control" required />
+                            {
+                                (this.state.isShortPassword) ?
+                                    <div className="alert alert-danger">Password must be greater than 6 digits</div>
+                                    :
+                                    null
+                            }
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="confirm-password" className="my-label-wrapper">
                                 <h4 className="my-label">Confirm Password: </h4>
                             </label>
-                            <input type="password" name="confirm-password" value={this.state.confirmPassword} onChange={this.handleChange} id="confirm-password" placeholder="Confirm Password" className="form-control" />
+                            <input type="password" name="confirm-password" onChange={this.handleChange} value={this.state.confirmPassword} id="confirm-password" placeholder="Confirm Password" className="form-control" required />
+                            {
+                                (this.state.isPasswordNotMatch) ?
+                                    <div className="alert alert-danger">Password doesn't match</div>
+                                    :
+                                    null
+                            }
                         </div>
 
                         <div className="form-group">
-                            <button onClick={this.handleSubmit} className={"btn btn-primary " + this.state.buttonState}>Submit</button>
+                            <button onClick={this.validateCredentials} className={"btn btn-primary "}>Submit</button>
                         </div>
 
                         <Link to="/signin" className="link">Already have an account?</Link>

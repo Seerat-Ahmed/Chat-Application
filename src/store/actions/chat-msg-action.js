@@ -20,3 +20,31 @@ export function _clearChatMessages() {
 
     return action;
 }
+
+
+export function _deleteMsg(key) {
+    const action = {
+        type: constant.DELETE_MSG,
+        payload: { key },
+    }
+
+    return action;
+}
+
+export function _editMsg(message, key) {
+    const action = {
+        type: constant.EDIT_MSG,
+        payload: { message, key }
+    }
+    
+    console.log('action: ', message, key);
+    return action;
+}
+
+export function _unreadMsg() {
+    const action = {
+        type: constant.UN_READ
+    }
+
+    return action;
+}

@@ -1,3 +1,7 @@
+.sign-in h4 {
+	font-size: 17px;
+}
+
 .sign-in .form-group {
     display: block  !important;
     max-width: 60%;

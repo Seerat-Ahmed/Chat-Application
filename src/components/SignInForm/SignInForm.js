@@ -47,7 +47,7 @@ class SignInForm extends Component {
         .then((user) => {
             this.props.setUserInfo(user);
             this.props.setToLogin();
-            that.props.history.push('/home');
+            that.props.history.push('/');
          })
         .catch((error) => console.log(error))
     }
@@ -67,9 +67,6 @@ class SignInForm extends Component {
                     <div className="col-md-1"></div>
 
                     <div className="col-md-6">
-                        {
-                            // <GoogleProvider />
-                        }
                         <div className="form-group">
                             <label htmlFor="email" className="my-label-wrapper">
                                 <h4 className="my-label">Email: </h4>
@@ -87,7 +84,7 @@ class SignInForm extends Component {
                         <div className="checkbox">
                             <label>
                             <input type="checkbox" name="remember-me" />                            
-                                <p className="my-label"> Remember me?</p>
+                                <span className="my-label"> Remember me?</span>
                             </label>    
                         </div>
 
@@ -95,13 +92,13 @@ class SignInForm extends Component {
                             <button onClick={ this.handleSubmit } className="btn btn-primary">Submit</button>
                         </div>
 
-                        <Link to="/signup" className="link">Sign up as a new user ?</Link>
+                        <Link to="/signup" className="link">Sign up as a new user?</Link>
 
                     </div>
 
                     <div className="col-md-5 aside-logo-wrapper">
                         <div className="avatar">
-                            <img src={ require('../../assets/firebase-logo.png') } alt="    firebase-logo" className="aside-logo" />
+                            <img src={ require('../../assets/firebase-logo.png') } alt="firebase-logo" className="aside-logo" />
                         </div>
                     </div>
                 </div>

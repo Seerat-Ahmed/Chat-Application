@@ -12,7 +12,8 @@ class Home extends Component {
     render() {
         return (
             <div className="home section">
-                
+                <h3>Home</h3>
+                <div className="h-line"></div>
             </div>
         )
     }

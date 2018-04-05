@@ -21,45 +21,53 @@ class LoginTab extends Component {
 
     checkForLogIn() {
         let that = this;
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 that.setState({ isLoggedIn: true });
             }
             else {
                 that.setState({ isLoggedIn: false });
             }
-          });
+        });
     }
 
     loggout() {
         firebase.auth().signOut()
-        .then(() => this.props.setToLogout());
+            .then(() => this.props.setToLogout());
     }
 
     render() {
-        
+
         return (
             /* ********** if logged in ********** */
-            (this.state.isLoggedIn)?
-            (
-                <ul className="nav navbar-nav navbar-right">
-                    <li><Link to="/profile">Hello { this.props.name }</Link></li>
-                    <li><Link onClick={ this.loggout } to="/signin">Log off</Link></li>
-            </ul>
-            )
-            /* ********** if not logged in ********** */
-            :(
-                <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/signup">Register</Link></li>
-                    <li><Link to="/signin">Sign In</Link></li>
-            </ul>
-            )
+            (this.state.isLoggedIn) ?
+                (
+                    <ul className="nav navbar-nav navbar-right">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/profile">Hello {this.props.name}</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" onClick={this.loggout} to="/signin">Log off</Link>
+                        </li>
+                    </ul>
+                )
+                /* ********** if not logged in ********** */
+                : (
+                    <ul className="nav navbar-nav navbar-right">
+                        <li className="nav-item">
+                            <Link to="/signup" className="nav-link">Register</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/signin" className="nav-link">Sign In</Link>
+                        </li>
+                    </ul>
+                )
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const name = (state.user)? state.user.displayName : '';
+    const name = (state.user) ? state.user.displayName : '';
     return {
         name: name,
     };
